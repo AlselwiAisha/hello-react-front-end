@@ -25,7 +25,7 @@ export const greetingSlice = createSlice({
       })
       .addCase(fetchRandomGreeting.fulfilled, (state, action) => {
         state.status = 'completed';
-        const message = action.payload.message;
+        const { message } = action.payload;
         state.message = message;
         state.error = '';
       })
