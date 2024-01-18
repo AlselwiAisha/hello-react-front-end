@@ -66,7 +66,7 @@
 <!-- GETTING STARTED -->
 ## 🔗 Link To Hello Rails Back-End <a name="link-to-hello-rails-back-end"></a>
 
-Here is the link to the [Hello Rails Back-End](http://127.0.0.1:3000/api/random_greeting/)repository.
+Here is the link to the [Hello Rails Back-End](https://github.com/AlselwiAisha/hello-rails-back-end/)repository.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
