@@ -1,5 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { createStore } from 'redux';
 
 const initialState = {
   greeting: '',
@@ -16,5 +15,5 @@ const rootReducer = (state = initialState, action) => {
       return state;
   }
 };
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer);
 export default store;
