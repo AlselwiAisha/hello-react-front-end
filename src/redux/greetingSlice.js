@@ -1,39 +1,43 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const fetchRandomGreeting = createAsyncThunk('greetings/fetchRandomGreeting', async () => {
-  try {
-    const response = await fetch('./api/random_greeting');
-    const greeting = await response.json();
-    return greeting;
-  } catch (error) {
-    return error.message;
-  }
-});
-
-export const greetingSlice = createSlice({
-  name: 'greetings',
-  initialState: {
-    status: 'idle',
-    message: [],
-    error: '',
+export const fetchRandomGreeting = createAsyncThunk(
+  'greetings/fetchRandomGreeting',
+  async () => {
+    const response = await fetch('http://127.0.0.1:3000/api/random_greeting');
+    if (!response.ok) {
+      throw new Error('Failed to fetch.');
+    }
+    const data = await response.json();
+    return data.greeting;
   },
+);
+
+const initialState = {
+  greeting: '',
+  isLoading: false,
+  error: null,
+};
+
+const greetingsSlice = createSlice({
+  name: 'greetings',
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchRandomGreeting.pending, (state) => {
-        state.status = 'loading';
+        state.isLoading = true;
+        state.error = null;
       })
       .addCase(fetchRandomGreeting.fulfilled, (state, action) => {
-        state.status = 'completed';
-        const { message } = action.payload;
-        state.message = message;
-        state.error = '';
+        state.greeting = action.payload;
+        state.isLoading = false;
+        state.error = null;
       })
       .addCase(fetchRandomGreeting.rejected, (state, action) => {
-        state.status = 'error';
-        state.error = action.payload.message;
+        state.isLoading = false;
+        state.error = action.error.message;
       });
   },
 });
 
-export default greetingSlice.reducer;
+export default greetingsSlice.reducer;
